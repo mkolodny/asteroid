@@ -45,6 +45,8 @@ not painless, and the developer needs to jump through hoops to get what he wants
 allows the developer to take advantage of the greatest features of Meteor's back-end
 platform without having to compromise on the front-end.</p>
 
+<p><a href="http://mondora.com/asteroid-a-better-way-to-build-meteor-apps/">Blog post on the library</a></p>
+
 <h2>
 <a name="install" class="anchor" href="#install"><span class="octicon octicon-link"></span></a>Install</h2>
 
@@ -105,6 +107,21 @@ platform without having to compromise on the front-end.</p>
 <p>The <a href="http://s27.postimg.org/hc1qjnjsz/Asteroid.png">Asteroid client</a>, which includes AngularJS (not required, but included for the demo), is almost half the size of the <a href="http://s29.postimg.org/3mxaifziv/Meteor.png">Meteor client</a>.</p>
 
 <h2>
+<a name="todo" class="anchor" href="#todo"><span class="octicon octicon-link"></span></a>Todo</h2>
+
+<p>Here follows a list of things which need to be done before the library
+can be considered "production ready":</p>
+
+<ul>
+<li><p>allow using selectors and modifiers to update an item (currently you can
+only replace top-level fields in the document with the Collection.update
+method). Difficulty 8/10</p></li>
+<li><p>allow using selectors with the reactiveQuery method. Difficulty 8/10</p></li>
+<li><p>add EJSON support (by porting Meteor's EJSON package). Difficulty 3/10</p></li>
+<li><p>solve <a href="https://github.com/meteor/meteor/issues/2096">this Oauth login issue</a>. Difficulty 5/10</p></li>
+<li><p>add SRP login support (by porting Meteor's SRP package). Difficulty 3/10</p></li>
+<li><p>designing a pretty logo. Difficulty 6/10</p></li>
+</ul><h2>
 <a name="api" class="anchor" href="#api"><span class="octicon octicon-link"></span></a>API</h2>
 
 <h2>
@@ -170,6 +187,10 @@ passed to the handler.</p></li>
 <hr><h3>
 <a name="asteroidloginwith--" class="anchor" href="#asteroidloginwith--"><span class="octicon octicon-link"></span></a>Asteroid.loginWith ... ()</h3>
 
+<p>WARNING: Meteor 0.8.1 introduced a security policy that broke
+this functionality.
+<a href="https://github.com/meteor/meteor/issues/2096">Work is undergoing to fix it</a>.</p>
+
 <p>Logs the user in via the specified third party (oauth)
 service.</p>
 
@@ -191,7 +212,7 @@ the error.</p>
 <hr><h3>
 <a name="asteroidloginusername-password" class="anchor" href="#asteroidloginusername-password"><span class="octicon octicon-link"></span></a>Asteroid.login(username, password)</h3>
 
-<p>Not yet implemented</p>
+<p>WARNING: Not yet implemented</p>
 
 <p>Logs the user in using the SRP protocol.</p>
 
