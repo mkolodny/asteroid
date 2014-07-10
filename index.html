@@ -28,27 +28,57 @@
         </ul>
       </header>
       <section>
-        <h1>
+        <p><a href="https://travis-ci.org/mondora/asteroid"><img src="https://travis-ci.org/mondora/asteroid.svg?branch=master" alt="Build Status"></a>
+<a href="https://coveralls.io/r/mondora/asteroid"><img src="https://coveralls.io/repos/mondora/asteroid/badge.png" alt="Coverage Status"></a>
+<a href="https://codeclimate.com/github/mondora/asteroid"><img src="https://codeclimate.com/github/mondora/asteroid.png" alt="Code Climate"></a></p>
+
+<p><a href="https://mondora.github.io/meteor-todo">Example todo app using AngularJS.</a>
+<a href="https://meteor.todo.pscanf.com">Same app using Meteor's front-end.</a></p>
+
+<h1>
 <a name="asteroid" class="anchor" href="#asteroid"><span class="octicon octicon-link"></span></a>asteroid</h1>
 
-<p>An alternative browser client for a Meteor backend.</p>
+<p>A javascript client (browser and node) for a Meteor backend.</p>
+
+<h2>
+<a name="table-of-contents" class="anchor" href="#table-of-contents"><span class="octicon octicon-link"></span></a>Table of contents</h2>
+
+<p><a href="#why">Why</a></p>
+
+<p><a href="#install">Install</a></p>
+
+<p><a href="#example-usage">Example usage</a></p>
+
+<p><a href="#advantages-over-the-canonical-meteor-front-end">Advantages over the canonical Meteor front-end</a></p>
+
+<p><a href="#build-asteroid-locally">Build asteroid locally</a></p>
+
+<p><a href="#contribute">Contribute</a></p>
+
+<p><a href="#todo">Todo</a></p>
+
+<p><a href="#api">API</a></p>
 
 <h2>
 <a name="why" class="anchor" href="#why"><span class="octicon octicon-link"></span></a>Why</h2>
 
-<p>I consider Meteor to be an awesome platform, but I find its templating system
-not sufficient for building truly amazing web apps. While it is possible
-to use it alongside front-end frameworks like AngularJS, the integration is
-not painless, and the developer needs to jump through hoops to get what he wants.</p>
+<p>Meteor is an awesome platform, but its canonical
+front-end is not very flexible. Asteroid gives the
+possibility to connect to a Meteor backend with any JS app.</p>
 
-<p>By conneting to any Meteor backend via the Distributed Data Protocol, Asteroid
-allows the developer to take advantage of the greatest features of Meteor's back-end
-platform without having to compromise on the front-end.</p>
+<p>Some of the things Asteroid allows you to do are:</p>
 
-<p><a href="http://mondora.com/asteroid-a-better-way-to-build-meteor-apps/">Blog post on the library</a></p>
+<ul>
+<li><p>make any existing application reactive</p></li>
+<li><p>use any front-end framework you want with Meteor</p></li>
+<li><p>develop browser extensions backed by Meteor</p></li>
+</ul><p><a href="http://mondora.com/asteroid-a-better-way-to-build-meteor-apps/">Blog post on the library</a></p>
 
 <h2>
 <a name="install" class="anchor" href="#install"><span class="octicon octicon-link"></span></a>Install</h2>
+
+<h3>
+<a name="in-the-browser" class="anchor" href="#in-the-browser"><span class="octicon octicon-link"></span></a>In the browser</h3>
 
 <p>First, dowload the library:</p>
 
@@ -57,36 +87,35 @@ platform without having to compromise on the front-end.</p>
 
 <p>Then, add the necessary libraries to your index.html:</p>
 
-<pre><code>&lt;script src="bower_components/ddp.js/dpp.js"&gt;&lt;/script&gt;
+<pre><code>&lt;script src="bower_components/ddp.js/src/dpp.js"&gt;&lt;/script&gt;
 &lt;script src="bower_components/q/q.js"&gt;&lt;/script&gt;
 &lt;script src="bower_components/asteroid/dist/asteroid.js"&gt;&lt;/script&gt;
 </code></pre>
 
-<h2>
-<a name="advantages-over-the-canonical-meteor-front-end" class="anchor" href="#advantages-over-the-canonical-meteor-front-end"><span class="octicon octicon-link"></span></a>Advantages over the canonical Meteor front-end</h2>
+<h3>
+<a name="in-node" class="anchor" href="#in-node"><span class="octicon octicon-link"></span></a>In node</h3>
 
-<ul>
-<li><p>Small footprint. The library is about ~10Kb minified. It depends on ddp.js (~4Kb minified), and a q-compatible promise library (q is ~17Kb minified, for a lightweight alternative, check out my fork of <a href="https://github.com/mondora/ayepromise">ayepromise</a>, which is ~2Kb minified).</p></li>
-<li><p>Framework agnostic. Use the tools you already know and love to build your app.</p></li>
-<li><p>Allows to use Meteor as a full-blown backend or just as a real-time platform pluggable into any existing project.</p></li>
-<li><p>Easily connect to multiple Meteor servers at the same time, perfect for building admin interfaces.</p></li>
-</ul><h2>
-<a name="test" class="anchor" href="#test"><span class="octicon octicon-link"></span></a>Test</h2>
+<p>Download the package:</p>
 
-<pre><code>npm test
+<pre><code>npm install git+https://github.com/mondora/asteroid
+</code></pre>
+
+<p>Require it in your project:</p>
+
+<pre><code>var Asteroid = require("asteroid");
 </code></pre>
 
 <h2>
-<a name="example" class="anchor" href="#example"><span class="octicon octicon-link"></span></a>Example</h2>
+<a name="example-usage" class="anchor" href="#example-usage"><span class="octicon octicon-link"></span></a>Example usage</h2>
 
-<p>Warning: the API is in still a bit in flux.</p>
+<p><strong>Warning: the API is in still a bit in flux.</strong></p>
 
 <div class="highlight highlight-javascript"><pre><span class="c1">// Connect to a Meteor backend</span>
 <span class="kd">var</span> <span class="nx">ceres</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Asteroid</span><span class="p">(</span><span class="s2">"localhost:3000"</span><span class="p">);</span>
 
 <span class="c1">// Use real-time collections</span>
 <span class="nx">ceres</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="s2">"tasks"</span><span class="p">);</span>
-<span class="kd">var</span> <span class="nx">tasks</span> <span class="o">=</span> <span class="nx">ceres</span><span class="p">.</span><span class="nx">createCollection</span><span class="p">(</span><span class="s2">"tasks"</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">tasks</span> <span class="o">=</span> <span class="nx">ceres</span><span class="p">.</span><span class="nx">getCollection</span><span class="p">(</span><span class="s2">"tasks"</span><span class="p">);</span>
 <span class="nx">tasks</span><span class="p">.</span><span class="nx">insert</span><span class="p">({</span>
   <span class="nx">description</span><span class="o">:</span> <span class="s2">"Do the laundry"</span>
 <span class="p">});</span>
@@ -98,29 +127,108 @@ platform without having to compromise on the front-end.</p>
 </pre></div>
 
 <h2>
-<a name="demo" class="anchor" href="#demo"><span class="octicon octicon-link"></span></a>Demo</h2>
+<a name="advantages-over-the-canonical-meteor-front-end" class="anchor" href="#advantages-over-the-canonical-meteor-front-end"><span class="octicon octicon-link"></span></a>Advantages over the canonical Meteor front-end</h2>
 
-<p><a href="https://mondora.github.io/meteor-todo">Example todo app using AngularJS</a></p>
+<ul>
+<li><p>Small footprint. The library is about ~10Kb minified. It
+depends on ddp.js (~4Kb minified), and a q-compatible
+promise library (q is ~17Kb minified, for a lightweight
+alternative, check out my fork of
+<a href="https://github.com/mondora/ayepromise">ayepromise</a>, which
+is ~2Kb minified). In the demo app, the <a href="http://s27.postimg.org/hc1qjnjsz/Asteroid.png">Asteroid
+client</a>,
+which includes AngularJS (not required, but included for
+the demo), is almost half the size of the <a href="http://s29.postimg.org/3mxaifziv/Meteor.png">Meteor
+client</a>.</p></li>
+<li><p>Framework agnostic. Use the tools you already know and
+love to build your app.</p></li>
+<li><p>Allows to use Meteor as a full-blown backend or just as a
+real-time platform pluggable into any existing project.</p></li>
+<li><p>Easily connect to multiple Meteor servers at the same
+time, perfect for building admin interfaces.</p></li>
+</ul><h2>
+<a name="build-asteroid-locally" class="anchor" href="#build-asteroid-locally"><span class="octicon octicon-link"></span></a>Build asteroid locally</h2>
 
-<p><a href="https://mondora.meteor.com">Same app using Meteor's front-end client</a></p>
+<p>Clone the repository (or your fork) on your computer.</p>
 
-<p>The <a href="http://s27.postimg.org/hc1qjnjsz/Asteroid.png">Asteroid client</a>, which includes AngularJS (not required, but included for the demo), is almost half the size of the <a href="http://s29.postimg.org/3mxaifziv/Meteor.png">Meteor client</a>.</p>
+<pre><code>git clone https://github.com/mondora/asteroid
+</code></pre>
+
+<p>Enter the project's directory and install the required
+dependencies:</p>
+
+<pre><code>cd asteroid/
+npm install
+bower install
+</code></pre>
+
+<p>For conveninece, I suggest installing a few <code>npm</code> modules
+globally:</p>
+
+<pre><code>npm install -g gulp karma mocha
+</code></pre>
+
+<p>Modfy the source files under <code>src/</code> as needed, then rebuild
+the distribution files, which will get placed in the <code>dist/</code>
+directory:</p>
+
+<pre><code>gulp buildBrowser
+gulp buildNode
+</code></pre>
+
+<p>You can add your unit tests in one of the files under <code>test/unit/</code>
+(or you can add another file in that folder if needed).
+Once you've added unit tests, you need also to rebuild the
+tests:</p>
+
+<pre><code>gulp buildTests
+</code></pre>
+
+<p>Now you can run tests. For <strong>nodejs</strong> run:</p>
+
+<pre><code>mocha test/asteroid.unit.js
+</code></pre>
+
+<p>For the browser run:</p>
+
+<pre><code>karma start test/karma.conf.js
+</code></pre>
+
+<p>You can set up an automated dev environment with automatic
+re-builds of source files and tests by running:</p>
+
+<pre><code>gulp dev
+</code></pre>
+
+<p>This will set up a webserver listening on <code>localhost:8080</code>, where
+you'll find a report for browser unit tests being run.</p>
+
+<h2>
+<a name="contribute" class="anchor" href="#contribute"><span class="octicon octicon-link"></span></a>Contribute</h2>
+
+<p>Contributions are as always very very welcome. If you
+want to help but don't know how to get started,
+<a href="http://mondora.com/#!/post/4ddde81d13b2152ab068b54e85bd4a2a">feel free to schedule a pair programming session with me!</a></p>
+
+<p><em>Contributing guidelines coming soon.</em></p>
 
 <h2>
 <a name="todo" class="anchor" href="#todo"><span class="octicon octicon-link"></span></a>Todo</h2>
 
-<p>Here follows a list of things which need to be done before the library
-can be considered "production ready":</p>
+<p>Here follows a list of things which need to be done before
+the library can be considered "production ready":</p>
 
 <ul>
-<li><p>allow using selectors and modifiers to update an item (currently you can
-only replace top-level fields in the document with the Collection.update
-method). Difficulty 8/10</p></li>
-<li><p>allow using selectors with the reactiveQuery method. Difficulty 8/10</p></li>
-<li><p>add EJSON support (by porting Meteor's EJSON package). Difficulty 3/10</p></li>
-<li><p>solve <a href="https://github.com/meteor/meteor/issues/2096">this Oauth login issue</a>. Difficulty 5/10</p></li>
-<li><p>add SRP login support (by porting Meteor's SRP package). Difficulty 3/10</p></li>
-<li><p>designing a pretty logo. Difficulty 6/10</p></li>
+<li><p>allow using selectors and modifiers to update an item
+(currently you can only replace top-level fields in the
+document with the Collection.update method). Difficulty
+8/10</p></li>
+<li><p>allow using selectors with the reactiveQuery method.
+Difficulty 8/10</p></li>
+<li><p>add EJSON support (by porting Meteor's EJSON package).
+Difficulty 3/10</p></li>
+<li><p>just an idea, but I'd fancy trying to integrate it with
+<a href="https://github.com/louischatriot/nedb">nedb</a></p></li>
 </ul><h2>
 <a name="api" class="anchor" href="#api"><span class="octicon octicon-link"></span></a>API</h2>
 
@@ -128,14 +236,14 @@ method). Difficulty 8/10</p></li>
 <a name="asteroid-methods" class="anchor" href="#asteroid-methods"><span class="octicon octicon-link"></span></a>Asteroid methods</h2>
 
 <h3>
-<a name="new-asteroidhost-ssl-debug" class="anchor" href="#new-asteroidhost-ssl-debug"><span class="octicon octicon-link"></span></a>new Asteroid(host, ssl, debug)</h3>
+<a name="new-asteroidhost-ssl-interceptor" class="anchor" href="#new-asteroidhost-ssl-interceptor"><span class="octicon octicon-link"></span></a>new Asteroid(host, ssl, interceptor)</h3>
 
 <p>Creates a new Asteroid instance, that is, a connection to a
 Meteor server (via DDP).</p>
 
-<p>After being constructed, the instance will connect itself
-to the Meteor backend. It will also try, upon connection,
-to resume a previous login session (with a token saved in
+<p>After being constructed, the instance will connect itself to
+the Meteor backend. It will also try, upon connection, to
+resume a previous login session (with a token saved in
 localstorage). The <code>Asteroid.resumeLoginPromise</code> property
 stores a promise which will be resolved if the resume was
 successful, rejected otherwise.</p>
@@ -152,8 +260,12 @@ transport. Otherwise <code>WebSocket</code> will be used. Note that
 server, e.g. <code>example.meteor.com</code></p></li>
 <li><p><code>ssl</code> <strong>boolean</strong> <em>optional</em>: whether to use SSL. Defaults
 to <code>false</code>.</p></li>
-<li><p><code>debug</code><strong>boolean</strong> <em>optional</em>: if set to <code>true</code>, DDP messages
-will be logged in the console. Defaults to <code>false</code>.</p></li>
+<li><p><code>interceptor</code> <strong>function</strong> <em>optional</em>: a function which
+will intercept any socket event. It will be called with an
+event object containing the name of the event, the
+timestamp of the event, and details about the event (for
+instance, in case of a "socket_message_received" event,
+it'll contain the peyload of the message).</p></li>
 </ul><h5>
 <a name="returns" class="anchor" href="#returns"><span class="octicon octicon-link"></span></a>Returns</h5>
 
@@ -187,10 +299,6 @@ passed to the handler.</p></li>
 <hr><h3>
 <a name="asteroidloginwith--" class="anchor" href="#asteroidloginwith--"><span class="octicon octicon-link"></span></a>Asteroid.loginWith ... ()</h3>
 
-<p>WARNING: Meteor 0.8.1 introduced a security policy that broke
-this functionality.
-<a href="https://github.com/meteor/meteor/issues/2096">Work is undergoing to fix it</a>.</p>
-
 <p>Logs the user in via the specified third party (oauth)
 service.</p>
 
@@ -210,26 +318,48 @@ the login is successful. Otherwise it'll be rejected with
 the error.</p>
 
 <hr><h3>
-<a name="asteroidloginusername-password" class="anchor" href="#asteroidloginusername-password"><span class="octicon octicon-link"></span></a>Asteroid.login(username, password)</h3>
+<a name="asteroidcreateuserusernameoremail-password-profile" class="anchor" href="#asteroidcreateuserusernameoremail-password-profile"><span class="octicon octicon-link"></span></a>Asteroid.createUser(usernameOrEmail, password, profile)</h3>
 
-<p>WARNING: Not yet implemented</p>
-
-<p>Logs the user in using the SRP protocol.</p>
+<p>Creates a user and logs him in. <strong>Does not</strong> hash the
+password before sending it to the server. This is not a
+problem, since you'll probably be using SSL anyway.</p>
 
 <h5>
 <a name="arguments-2" class="anchor" href="#arguments-2"><span class="octicon octicon-link"></span></a>Arguments</h5>
 
 <ul>
-<li><p><code>username</code> <strong>string</strong> <em>required</em>: the username</p></li>
-<li><p><code>password</code> <strong>string</strong> <em>required</em>: the password. Note: since
-Meteor uses the SRP protocol, the password is never
-actually sent to the server.</p></li>
+<li><p><code>usernameOrEmail</code> <strong>string</strong> <em>required</em>: the username or
+email.</p></li>
+<li><p><code>password</code> <strong>string</strong> <em>required</em>: the password.</p></li>
+<li><p><code>profile</code> <strong>object</strong> <em>optional</em>: a blackbox, you can throw
+anything in here and it'll end up into <code>user.profile</code>.</p></li>
 </ul><h5>
 <a name="returns-3" class="anchor" href="#returns-3"><span class="octicon octicon-link"></span></a>Returns</h5>
 
 <p>A promise which will be resolved with the logged user id if
+the creation and login are successful. Otherwise it'll be
+rejected with an error.</p>
+
+<hr><h3>
+<a name="asteroidloginwithpasswordusernameoremail-password" class="anchor" href="#asteroidloginwithpasswordusernameoremail-password"><span class="octicon octicon-link"></span></a>Asteroid.loginWithPassword(usernameOrEmail, password)</h3>
+
+<p>Logs the user in username/email and password. <strong>Does not</strong>
+hash the password before sending it to the server. This is
+not a problem, since you'll probably be using SSL anyway.</p>
+
+<h5>
+<a name="arguments-3" class="anchor" href="#arguments-3"><span class="octicon octicon-link"></span></a>Arguments</h5>
+
+<ul>
+<li><p><code>usernameOrEmail</code> <strong>string</strong> <em>required</em>: the username or
+email.</p></li>
+<li><p><code>password</code> <strong>string</strong> <em>required</em>: the password.</p></li>
+</ul><h5>
+<a name="returns-4" class="anchor" href="#returns-4"><span class="octicon octicon-link"></span></a>Returns</h5>
+
+<p>A promise which will be resolved with the logged user id if
 the login is successful. Otherwise it'll be rejected with
-the error.</p>
+an error.</p>
 
 <hr><h3>
 <a name="asteroidlogout" class="anchor" href="#asteroidlogout"><span class="octicon octicon-link"></span></a>Asteroid.logout()</h3>
@@ -237,12 +367,12 @@ the error.</p>
 <p>Logs out the user.</p>
 
 <h5>
-<a name="arguments-3" class="anchor" href="#arguments-3"><span class="octicon octicon-link"></span></a>Arguments</h5>
+<a name="arguments-4" class="anchor" href="#arguments-4"><span class="octicon octicon-link"></span></a>Arguments</h5>
 
 <p>None</p>
 
 <h5>
-<a name="returns-4" class="anchor" href="#returns-4"><span class="octicon octicon-link"></span></a>Returns</h5>
+<a name="returns-5" class="anchor" href="#returns-5"><span class="octicon octicon-link"></span></a>Returns</h5>
 
 <p>A promise which will be resolved with if the logout is
 successful. Otherwise it'll be rejected with the error.</p>
@@ -250,42 +380,43 @@ successful. Otherwise it'll be rejected with the error.</p>
 <hr><h3>
 <a name="asteroidsubscribename-param1-param2-" class="anchor" href="#asteroidsubscribename-param1-param2-"><span class="octicon octicon-link"></span></a>Asteroid.subscribe(name, [param1, param2, ...])</h3>
 
-<p>Subscribes to the specified subscription. If a subscription
-by that name is already present (and successful), first
-Asteroid unsubscribes from it.</p>
+<p>Subscribes to the specified subscription. If an identical
+subscription (same name and parameters) has already been
+made, Asteroid will return that subscription.</p>
 
 <h5>
-<a name="arguments-4" class="anchor" href="#arguments-4"><span class="octicon octicon-link"></span></a>Arguments</h5>
+<a name="arguments-5" class="anchor" href="#arguments-5"><span class="octicon octicon-link"></span></a>Arguments</h5>
 
 <ul>
 <li><p><code>name</code> <strong>string</strong> <em>required</em>: the name of the subscription.</p></li>
 <li><p><code>param1, param2, ...</code> <em>optional</em>: a list of parameters
 that will be passed to the publish function on the server.</p></li>
 </ul><h5>
-<a name="returns-5" class="anchor" href="#returns-5"><span class="octicon octicon-link"></span></a>Returns</h5>
+<a name="returns-6" class="anchor" href="#returns-6"><span class="octicon octicon-link"></span></a>Returns</h5>
 
-<p>A promise, this will be resolved with the <code>id</code> of the
-subscription if the subscription is successful. It will be
-rejected otherwise.</p>
+<p>A subscription instance.</p>
 
 <hr><h3>
-<a name="asteroidunsubscribeid" class="anchor" href="#asteroidunsubscribeid"><span class="octicon octicon-link"></span></a>Asteroid.unsubscribe(id)</h3>
+<a name="asteroidsubscription" class="anchor" href="#asteroidsubscription"><span class="octicon octicon-link"></span></a>Asteroid.Subscription</h3>
 
-<p>Unsubscribes from the specified subscription.</p>
+<p>Subscription instances have the following properties:</p>
 
-<h5>
-<a name="arguments-5" class="anchor" href="#arguments-5"><span class="octicon octicon-link"></span></a>Arguments</h5>
+<ul>
+<li><p><code>id</code> <strong>string</strong>: the <code>id</code> of the subscription, as
+returned by the <code>ddp.sub</code> method</p></li>
+<li><p><code>ready</code> <strong>promise</strong>: a promise which will be resolved with
+the <code>id</code> of the subscription if the subscription succeeds
+(we receive the ddp <code>ready</code> message), or will be rejected
+if it fails (we receive, upon subscribing, the <code>nosub</code>
+message).</p></li>
+</ul><p>And the following method:</p>
 
 <ul>
 <li>
-<code>id</code> <strong>string</strong> <em>required</em>: the <code>id</code> of the subscription, as
-returned by the <code>subscribe</code> method</li>
-</ul><h5>
-<a name="returns-6" class="anchor" href="#returns-6"><span class="octicon octicon-link"></span></a>Returns</h5>
-
-<p>Nothing</p>
-
-<hr><h3>
+<code>stop</code>: it takes no argument, sends the ddp <code>unsub</code>
+message and deletes the subscription so it can be garbage
+collected.</li>
+</ul><hr><h3>
 <a name="asteroidcallmethod-param1-param2-" class="anchor" href="#asteroidcallmethod-param1-param2-"><span class="octicon octicon-link"></span></a>Asteroid.call(method, [param1, param2, ...])</h3>
 
 <p>Calls a server-side method with the specified arguments.</p>
@@ -337,7 +468,7 @@ will be passed to the method on the server.</p></li>
 <p>Same as Asteroid.call, see above.</p>
 
 <hr><h3>
-<a name="asteroidcreatecollectionname" class="anchor" href="#asteroidcreatecollectionname"><span class="octicon octicon-link"></span></a>Asteroid.createCollection(name)</h3>
+<a name="asteroidgetcollectionname" class="anchor" href="#asteroidgetcollectionname"><span class="octicon octicon-link"></span></a>Asteroid.getCollection(name)</h3>
 
 <p>Creates and returns a collection. If the collection already
 exists, nothing changes and the existing one is returned.</p>
@@ -366,9 +497,10 @@ front-end we would normally need to define the
 
 <p>With Asteroid, when the first <code>added</code> message is received,
 if the <code>posts</code> collection doesn't exist yet, it will get
-automatically created. We can then get a reference to that
-collection by calling <code>createCollection</code> (or by accessing
-the semi-private Asteroid.collections dictionary).</p>
+automatically created. We can then get a reference to
+that collection by calling <code>createCollection</code> (or by
+accessing the semi-private Asteroid.collections
+dictionary).</p>
 
 <h2>
 <a name="asteroidcollection-methods" class="anchor" href="#asteroidcollection-methods"><span class="octicon octicon-link"></span></a>Asteroid.Collection methods</h2>
@@ -379,7 +511,7 @@ the semi-private Asteroid.collections dictionary).</p>
 <a name="collectioninsertitem" class="anchor" href="#collectioninsertitem"><span class="octicon octicon-link"></span></a>Collection.insert(item)</h3>
 
 <p>Inserts an item into a collection. If the item does not
-have an _id property, one will be automatically generated
+have an <code>_id</code> property, one will be automatically generated
 for it.</p>
 
 <h5>
@@ -396,14 +528,14 @@ planned.</li>
 <p>An object with two properties: <code>local</code> and <code>remote</code>. Both
 properties are promises.</p>
 
-<p>The local promise is immediately resolved with the _id of
+<p>The local promise is immediately resolved with the <code>_id</code> of
 the inserted item. That is, unless an error occurred. In
 that case, an exception will be raised. (TODO: this is a bit
-of an API inconsistency which should be fixed).</p>
+of an API inconsistency which maybe should be fixed).</p>
 
-<p>The remote promise is resolved with the _id of the inserted
-item if the remote insert is successful. Otherwise it's
-rejected with the reason of the failure.</p>
+<p>The remote promise is resolved with the <code>_id</code> of the
+inserted item if the remote insert is successful. Otherwise
+it's rejected with the reason of the failure.</p>
 
 <hr><h3>
 <a name="collectionupdateid-item" class="anchor" href="#collectionupdateid-item"><span class="octicon octicon-link"></span></a>Collection.update(id, item)</h3>
@@ -423,12 +555,12 @@ replace the old one.</p></li>
 <p>An object with two properties: <code>local</code> and <code>remote</code>. Both
 properties are promises.</p>
 
-<p>The local promise is immediately resolved with the _id of
+<p>The local promise is immediately resolved with the <code>_id</code> of
 the updated item. That is, unless an error occurred. In
 that case, an exception will be raised. (TODO: this is a bit
 of an API inconsistency which should be fixed).</p>
 
-<p>The remote promise is resolved with the _id of the updated
+<p>The remote promise is resolved with the <code>_id</code> of the updated
 item if the remote update is successful. Otherwise it's
 rejected with the reason of the failure.</p>
 
@@ -455,12 +587,12 @@ Meteor's API. Aligning the two is on the TODO list.</p>
 <p>An object with two properties: <code>local</code> and <code>remote</code>. Both
 properties are promises.</p>
 
-<p>The local promise is immediately resolved with the _id of
+<p>The local promise is immediately resolved with the <code>_id</code> of
 the removed item. That is, unless an error occurred. In
 that case, an exception will be raised. (TODO: this is a bit
 of an API inconsistency which should be fixed).</p>
 
-<p>The remote promise is resolved with the _id of the removed
+<p>The remote promise is resolved with the <code>_id</code> of the removed
 item if the remote remove is successful. Otherwise it's
 rejected with the reason of the failure.</p>
 
