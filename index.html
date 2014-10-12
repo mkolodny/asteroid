@@ -1,34 +1,37 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Asteroid by mondora</title>
-
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <title>Asteroid by mondora</title>
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>Asteroid</h1>
-        <p>An alternative client for a Meteor backend</p>
+    <div id="container">
+      <div class="inner">
 
-        <p class="view"><a href="https://github.com/mondora/asteroid">View the Project on GitHub <small>mondora/asteroid</small></a></p>
+        <header>
+          <h1>Asteroid</h1>
+          <h2>An alternative client for a Meteor backend</h2>
+        </header>
 
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/mondora/asteroid/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/mondora/asteroid/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/mondora/asteroid" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
 
-        <ul>
-          <li><a href="https://github.com/mondora/asteroid/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/mondora/asteroid/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/mondora/asteroid">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <p><a href="https://travis-ci.org/mondora/asteroid"><img src="https://travis-ci.org/mondora/asteroid.svg?branch=master" alt="Build Status"></a>
+        <hr>
+
+        <section id="main_content">
+          <p><a href="https://travis-ci.org/mondora/asteroid"><img src="https://travis-ci.org/mondora/asteroid.svg?branch=master" alt="Build Status"></a>
 <a href="https://coveralls.io/r/mondora/asteroid"><img src="https://coveralls.io/repos/mondora/asteroid/badge.png" alt="Coverage Status"></a></p>
 
 <p><a href="http://mondora.github.io/meteor-todo">Example todo app using AngularJS.</a>
@@ -54,8 +57,6 @@
 
 <p><a href="#contribute">Contribute</a></p>
 
-<p><a href="#todo">Todo</a></p>
-
 <p><a href="#api">API</a></p>
 
 <h2>
@@ -71,7 +72,9 @@ possibility to connect to a Meteor backend with any JS app.</p>
 <li><p>make any existing application reactive</p></li>
 <li><p>use any front-end framework you want with Meteor</p></li>
 <li><p>develop browser extensions backed by Meteor</p></li>
-</ul><p><a href="http://mondora.com/#!/post/e2da7bd7ccb774de13324488b4e24abd">Blog post on the library</a></p>
+</ul>
+
+<p><a href="http://mondora.com/#!/post/e2da7bd7ccb774de13324488b4e24abd">Blog post on the library</a></p>
 
 <h2>
 <a name="install" class="anchor" href="#install"><span class="octicon octicon-link"></span></a>Install</h2>
@@ -84,19 +87,30 @@ possibility to connect to a Meteor backend with any JS app.</p>
 <pre><code>bower install asteroid
 </code></pre>
 
-<p>Then, add the necessary libraries to your index.html:</p>
+<p>Then, add the necessary libraries to your <code>index.html</code>:</p>
 
 <pre><code>&lt;script src="bower_components/ddp.js/src/ddp.js"&gt;&lt;/script&gt;
 &lt;script src="bower_components/q/q.js"&gt;&lt;/script&gt;
-&lt;script src="bower_components/asteroid/dist/asteroid.js"&gt;&lt;/script&gt;
+&lt;script src="bower_components/asteroid/dist/asteroid.browser.js"&gt;&lt;/script&gt;
 </code></pre>
+
+<p>If you want to login via oauth providers (facebook, google etc),
+also include the appropriate plugin:</p>
+
+<pre><code>&lt;script src="bower_components/asteroid/dist/plugins/facebook-login.js"&gt;&lt;/script&gt;
+</code></pre>
+
+<h3>
+<a name="in-a-chrome-extension-or-in-cordova" class="anchor" href="#in-a-chrome-extension-or-in-cordova"><span class="octicon octicon-link"></span></a>In a chrome extension or in cordova</h3>
+
+<p>Just replace <code>asteroid.browser.js</code> with <code>asteroid.chrome.js</code> or <code>asteroid.cordova.js</code>.</p>
 
 <h3>
 <a name="in-node" class="anchor" href="#in-node"><span class="octicon octicon-link"></span></a>In node</h3>
 
 <p>Download the package:</p>
 
-<pre><code>npm install git+https://github.com/mondora/asteroid
+<pre><code>npm install asteroid
 </code></pre>
 
 <p>Require it in your project:</p>
@@ -107,19 +121,23 @@ possibility to connect to a Meteor backend with any JS app.</p>
 <h2>
 <a name="example-usage" class="anchor" href="#example-usage"><span class="octicon octicon-link"></span></a>Example usage</h2>
 
-<p><strong>Warning: the API is in still a bit in flux.</strong></p>
-
 <div class="highlight highlight-javascript"><pre><span class="c1">// Connect to a Meteor backend</span>
 <span class="kd">var</span> <span class="nx">ceres</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Asteroid</span><span class="p">(</span><span class="s2">"localhost:3000"</span><span class="p">);</span>
 
 <span class="c1">// Use real-time collections</span>
-<span class="nx">ceres</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="s2">"tasks"</span><span class="p">);</span>
+<span class="nx">ceres</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="s2">"tasksPublication"</span><span class="p">);</span>
 <span class="kd">var</span> <span class="nx">tasks</span> <span class="o">=</span> <span class="nx">ceres</span><span class="p">.</span><span class="nx">getCollection</span><span class="p">(</span><span class="s2">"tasks"</span><span class="p">);</span>
 <span class="nx">tasks</span><span class="p">.</span><span class="nx">insert</span><span class="p">({</span>
   <span class="nx">description</span><span class="o">:</span> <span class="s2">"Do the laundry"</span>
 <span class="p">});</span>
-<span class="kd">var</span> <span class="nx">laundryTaskQuery</span> <span class="o">=</span> <span class="nx">tasks</span><span class="p">.</span><span class="nx">reactiveQuery</span><span class="p">({</span><span class="nx">description</span><span class="o">:</span> <span class="s2">"Do the laundry"</span><span class="p">});</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">laundryTaskQuery</span><span class="p">.</span><span class="nx">result</span><span class="p">);</span> <span class="c1">// Logs the array of results</span>
+<span class="c1">// Get the task</span>
+<span class="kd">var</span> <span class="nx">laundryTaskRQ</span> <span class="o">=</span> <span class="nx">tasks</span><span class="p">.</span><span class="nx">reactiveQuery</span><span class="p">({</span><span class="nx">description</span><span class="o">:</span> <span class="s2">"Do the laundry"</span><span class="p">});</span>
+<span class="c1">// Log the array of results</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">laundryTaskRQ</span><span class="p">.</span><span class="nx">result</span><span class="p">);</span>
+<span class="c1">// Listen for changes</span>
+<span class="nx">laundryTaskRQ</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">"change"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">laundryTaskRQ</span><span class="p">.</span><span class="nx">result</span><span class="p">);</span>
+<span class="p">});</span>
 
 <span class="c1">// Login your user</span>
 <span class="nx">ceres</span><span class="p">.</span><span class="nx">loginWithTwitter</span><span class="p">();</span>
@@ -129,23 +147,16 @@ possibility to connect to a Meteor backend with any JS app.</p>
 <a name="advantages-over-the-canonical-meteor-front-end" class="anchor" href="#advantages-over-the-canonical-meteor-front-end"><span class="octicon octicon-link"></span></a>Advantages over the canonical Meteor front-end</h2>
 
 <ul>
-<li><p>Small footprint. The library is about ~10Kb minified. It
-depends on ddp.js (~4Kb minified), and a q-compatible
-promise library (q is ~17Kb minified, for a lightweight
-alternative, check out my fork of
-<a href="https://github.com/mondora/ayepromise">ayepromise</a>, which
-is ~2Kb minified). In the demo app, the <a href="http://s27.postimg.org/hc1qjnjsz/Asteroid.png">Asteroid
-client</a>,
-which includes AngularJS (not required, but included for
-the demo), is almost half the size of the <a href="http://s29.postimg.org/3mxaifziv/Meteor.png">Meteor
-client</a>.</p></li>
+<li><p>Small footprint.</p></li>
 <li><p>Framework agnostic. Use the tools you already know and
 love to build your app.</p></li>
 <li><p>Allows to use Meteor as a full-blown backend or just as a
 real-time platform pluggable into any existing project.</p></li>
 <li><p>Easily connect to multiple Meteor servers at the same
 time, perfect for building admin interfaces.</p></li>
-</ul><h2>
+</ul>
+
+<h2>
 <a name="build-asteroid-locally" class="anchor" href="#build-asteroid-locally"><span class="octicon octicon-link"></span></a>Build asteroid locally</h2>
 
 <p>Clone the repository (or your fork) on your computer.</p>
@@ -158,49 +169,15 @@ dependencies:</p>
 
 <pre><code>cd asteroid/
 npm install
-bower install
 </code></pre>
 
-<p>For conveninece, I suggest installing a few <code>npm</code> modules
-globally:</p>
+<p>Start the development environment (requires ´gulp` installed globally):</p>
 
-<pre><code>npm install -g gulp karma mocha
+<pre><code>gulp
 </code></pre>
 
-<p>Modfy the source files under <code>src/</code> as needed, then rebuild
-the distribution files, which will get placed in the <code>dist/</code>
-directory:</p>
-
-<pre><code>gulp buildBrowser
-gulp buildNode
-</code></pre>
-
-<p>You can add your unit tests in one of the files under <code>test/unit/</code>
-(or you can add another file in that folder if needed).
-Once you've added unit tests, you need also to rebuild the
-tests:</p>
-
-<pre><code>gulp buildTests
-</code></pre>
-
-<p>Now you can run tests. For <strong>nodejs</strong> run:</p>
-
-<pre><code>mocha test/asteroid.unit.js
-</code></pre>
-
-<p>For the browser run:</p>
-
-<pre><code>karma start test/karma.conf.js
-</code></pre>
-
-<p>You can set up an automated dev environment with automatic
-re-builds of source files and tests by running:</p>
-
-<pre><code>gulp dev
-</code></pre>
-
-<p>This will set up a webserver listening on <code>localhost:8080</code>, where
-you'll find a report for browser unit tests being run.</p>
+<p>Visit <code>localhost:8080/browser.html</code> and <code>localhost:8080/node.html</code>
+for unit tests result.</p>
 
 <h2>
 <a name="contribute" class="anchor" href="#contribute"><span class="octicon octicon-link"></span></a>Contribute</h2>
@@ -209,26 +186,7 @@ you'll find a report for browser unit tests being run.</p>
 want to help but don't know how to get started,
 <a href="http://mondora.com/#!/post/4ddde81d13b2152ab068b54e85bd4a2a">feel free to schedule a pair programming session with me!</a></p>
 
-<p><em>Contributing guidelines coming soon.</em></p>
-
 <h2>
-<a name="todo" class="anchor" href="#todo"><span class="octicon octicon-link"></span></a>Todo</h2>
-
-<p>Here follows a list of things which need to be done before
-the library can be considered "production ready":</p>
-
-<ul>
-<li><p>allow using selectors and modifiers to update an item
-(currently you can only replace top-level fields in the
-document with the Collection.update method). Difficulty
-8/10</p></li>
-<li><p>allow using selectors with the reactiveQuery method.
-Difficulty 8/10</p></li>
-<li><p>add EJSON support (by porting Meteor's EJSON package).
-Difficulty 3/10</p></li>
-<li><p>just an idea, but I'd fancy trying to integrate it with
-<a href="https://github.com/louischatriot/nedb">nedb</a></p></li>
-</ul><h2>
 <a name="api" class="anchor" href="#api"><span class="octicon octicon-link"></span></a>API</h2>
 
 <h2>
@@ -265,12 +223,16 @@ event object containing the name of the event, the
 timestamp of the event, and details about the event (for
 instance, in case of a "socket_message_received" event,
 it'll contain the payload of the message).</p></li>
-</ul><h5>
+</ul>
+
+<h5>
 <a name="returns" class="anchor" href="#returns"><span class="octicon octicon-link"></span></a>Returns</h5>
 
 <p>An Asteroid instance.</p>
 
-<hr><h3>
+<hr>
+
+<h3>
 <a name="asteroidonevent-handler" class="anchor" href="#asteroidonevent-handler"><span class="octicon octicon-link"></span></a>Asteroid.on(event, handler)</h3>
 
 <p>Registers an event handler for the specified event.</p>
@@ -281,7 +243,9 @@ it'll contain the payload of the message).</p></li>
 <ul>
 <li><p><code>event</code> <strong>string</strong> <em>required</em>: the name of the event.</p></li>
 <li><p><code>handler</code> <strong>function</strong> <em>required</em>: the handler.</p></li>
-</ul><p>An Asteroid instance emits the following events:</p>
+</ul>
+
+<p>An Asteroid instance emits the following events:</p>
 
 <ul>
 <li><p><code>connected</code>: emitted when the DDP connection is
@@ -290,12 +254,16 @@ established. No arguments are passed to the handler.</p></li>
 logged in user will be passed as argument to the handler.</p></li>
 <li><p><code>logout</code>: emitted when the user logs out. No arguments are
 passed to the handler.</p></li>
-</ul><h5>
+</ul>
+
+<h5>
 <a name="returns-1" class="anchor" href="#returns-1"><span class="octicon octicon-link"></span></a>Returns</h5>
 
 <p>Nothing</p>
 
-<hr><h3>
+<hr>
+
+<h3>
 <a name="asteroidloginwith--" class="anchor" href="#asteroidloginwith--"><span class="octicon octicon-link"></span></a>Asteroid.loginWith ... ()</h3>
 
 <p>Logs the user in via the specified third party (oauth)
@@ -309,14 +277,18 @@ service.</p>
 <li><p><strong>google</strong>: <code>loginWithGoogle</code></p></li>
 <li><p><strong>twitter</strong>: <code>loginWithTwitter</code></p></li>
 <li><p><strong>github</strong>: <code>loginWithGithub</code></p></li>
-</ul><h5>
+</ul>
+
+<h5>
 <a name="returns-2" class="anchor" href="#returns-2"><span class="octicon octicon-link"></span></a>Returns</h5>
 
 <p>A promise which will be resolved with the logged user id if
 the login is successful. Otherwise it'll be rejected with
 the error.</p>
 
-<hr><h3>
+<hr>
+
+<h3>
 <a name="asteroidcreateuserusernameoremail-password-profile" class="anchor" href="#asteroidcreateuserusernameoremail-password-profile"><span class="octicon octicon-link"></span></a>Asteroid.createUser(usernameOrEmail, password, profile)</h3>
 
 <p>Creates a user and logs him in. <strong>Does not</strong> hash the
@@ -332,14 +304,18 @@ email.</p></li>
 <li><p><code>password</code> <strong>string</strong> <em>required</em>: the password.</p></li>
 <li><p><code>profile</code> <strong>object</strong> <em>optional</em>: a blackbox, you can throw
 anything in here and it'll end up into <code>user.profile</code>.</p></li>
-</ul><h5>
+</ul>
+
+<h5>
 <a name="returns-3" class="anchor" href="#returns-3"><span class="octicon octicon-link"></span></a>Returns</h5>
 
 <p>A promise which will be resolved with the logged user id if
 the creation and login are successful. Otherwise it'll be
 rejected with an error.</p>
 
-<hr><h3>
+<hr>
+
+<h3>
 <a name="asteroidloginwithpasswordusernameoremail-password" class="anchor" href="#asteroidloginwithpasswordusernameoremail-password"><span class="octicon octicon-link"></span></a>Asteroid.loginWithPassword(usernameOrEmail, password)</h3>
 
 <p>Logs the user in username/email and password. <strong>Does not</strong>
@@ -353,14 +329,18 @@ not a problem, since you'll probably be using SSL anyway.</p>
 <li><p><code>usernameOrEmail</code> <strong>string</strong> <em>required</em>: the username or
 email.</p></li>
 <li><p><code>password</code> <strong>string</strong> <em>required</em>: the password.</p></li>
-</ul><h5>
+</ul>
+
+<h5>
 <a name="returns-4" class="anchor" href="#returns-4"><span class="octicon octicon-link"></span></a>Returns</h5>
 
 <p>A promise which will be resolved with the logged user id if
 the login is successful. Otherwise it'll be rejected with
 an error.</p>
 
-<hr><h3>
+<hr>
+
+<h3>
 <a name="asteroidlogout" class="anchor" href="#asteroidlogout"><span class="octicon octicon-link"></span></a>Asteroid.logout()</h3>
 
 <p>Logs out the user.</p>
@@ -376,7 +356,9 @@ an error.</p>
 <p>A promise which will be resolved with if the logout is
 successful. Otherwise it'll be rejected with the error.</p>
 
-<hr><h3>
+<hr>
+
+<h3>
 <a name="asteroidsubscribename-param1-param2-" class="anchor" href="#asteroidsubscribename-param1-param2-"><span class="octicon octicon-link"></span></a>Asteroid.subscribe(name, [param1, param2, ...])</h3>
 
 <p>Subscribes to the specified subscription. If an identical
@@ -390,12 +372,16 @@ made, Asteroid will return that subscription.</p>
 <li><p><code>name</code> <strong>string</strong> <em>required</em>: the name of the subscription.</p></li>
 <li><p><code>param1, param2, ...</code> <em>optional</em>: a list of parameters
 that will be passed to the publish function on the server.</p></li>
-</ul><h5>
+</ul>
+
+<h5>
 <a name="returns-6" class="anchor" href="#returns-6"><span class="octicon octicon-link"></span></a>Returns</h5>
 
 <p>A subscription instance.</p>
 
-<hr><h3>
+<hr>
+
+<h3>
 <a name="asteroidsubscription" class="anchor" href="#asteroidsubscription"><span class="octicon octicon-link"></span></a>Asteroid.Subscription</h3>
 
 <p>Subscription instances have the following properties:</p>
@@ -408,14 +394,20 @@ the <code>id</code> of the subscription if the subscription succeeds
 (we receive the ddp <code>ready</code> message), or will be rejected
 if it fails (we receive, upon subscribing, the <code>nosub</code>
 message).</p></li>
-</ul><p>And the following method:</p>
+</ul>
+
+<p>And the following method:</p>
 
 <ul>
 <li>
 <code>stop</code>: it takes no argument, sends the ddp <code>unsub</code>
 message and deletes the subscription so it can be garbage
 collected.</li>
-</ul><hr><h3>
+</ul>
+
+<hr>
+
+<h3>
 <a name="asteroidcallmethod-param1-param2-" class="anchor" href="#asteroidcallmethod-param1-param2-"><span class="octicon octicon-link"></span></a>Asteroid.call(method, [param1, param2, ...])</h3>
 
 <p>Calls a server-side method with the specified arguments.</p>
@@ -428,7 +420,9 @@ collected.</li>
 call.</p></li>
 <li><p><code>param1, param2, ...</code> <em>optional</em>: a list of parameters
 that will be passed to the method on the server.</p></li>
-</ul><h5>
+</ul>
+
+<h5>
 <a name="returns-7" class="anchor" href="#returns-7"><span class="octicon octicon-link"></span></a>Returns</h5>
 
 <p>An object with two properties: <code>result</code> and <code>updated</code>. Both
@@ -447,7 +441,9 @@ collection, the client has been notified of said insertion).</p>
 with the error returned by the server. The <code>updated</code>
 promise will be rejected as well (with nothing).</p>
 
-<hr><h3>
+<hr>
+
+<h3>
 <a name="asteroidapplymethod-params" class="anchor" href="#asteroidapplymethod-params"><span class="octicon octicon-link"></span></a>Asteroid.apply(method, params)</h3>
 
 <p>Same as Asteroid.call, but using as array of parameters
@@ -461,12 +457,16 @@ instead of a list.</p>
 call.</p></li>
 <li><p><code>params</code> <strong>array</strong> <em>optional</em>: an array of parameters that
 will be passed to the method on the server.</p></li>
-</ul><h5>
+</ul>
+
+<h5>
 <a name="returns-8" class="anchor" href="#returns-8"><span class="octicon octicon-link"></span></a>Returns</h5>
 
 <p>Same as Asteroid.call, see above.</p>
 
-<hr><h3>
+<hr>
+
+<h3>
 <a name="asteroidgetcollectionname" class="anchor" href="#asteroidgetcollectionname"><span class="octicon octicon-link"></span></a>Asteroid.getCollection(name)</h3>
 
 <p>Creates and returns a collection. If the collection already
@@ -479,7 +479,9 @@ exists, nothing changes and the existing one is returned.</p>
 <li>
 <code>name</code> <strong>string</strong> <em>required</em>: the name of the collection to
 create.</li>
-</ul><h5>
+</ul>
+
+<h5>
 <a name="returns-9" class="anchor" href="#returns-9"><span class="octicon octicon-link"></span></a>Returns</h5>
 
 <p>A reference to the collection.</p>
@@ -521,7 +523,9 @@ for it.</p>
 <code>item</code> <strong>object</strong> <em>required</em>: the object to insert. Must
 be JSON serializable. Optional support for EJSON is
 planned.</li>
-</ul><h5>
+</ul>
+
+<h5>
 <a name="returns-10" class="anchor" href="#returns-10"><span class="octicon octicon-link"></span></a>Returns</h5>
 
 <p>An object with two properties: <code>local</code> and <code>remote</code>. Both
@@ -536,7 +540,9 @@ of an API inconsistency which maybe should be fixed).</p>
 inserted item if the remote insert is successful. Otherwise
 it's rejected with the reason of the failure.</p>
 
-<hr><h3>
+<hr>
+
+<h3>
 <a name="collectionupdateid-item" class="anchor" href="#collectionupdateid-item"><span class="octicon octicon-link"></span></a>Collection.update(id, item)</h3>
 
 <p>Updates the specified item.</p>
@@ -548,7 +554,9 @@ it's rejected with the reason of the failure.</p>
 <li><p><code>id</code> <strong>string</strong> <em>required</em>: the id of the item to update.</p></li>
 <li><p><code>item</code> <strong>object</strong> <em>required</em>: the object that will
 replace the old one.</p></li>
-</ul><h5>
+</ul>
+
+<h5>
 <a name="returns-11" class="anchor" href="#returns-11"><span class="octicon octicon-link"></span></a>Returns</h5>
 
 <p>An object with two properties: <code>local</code> and <code>remote</code>. Both
@@ -569,7 +577,9 @@ rejected with the reason of the failure.</p>
 <p>The API greatly differs from
 Meteor's API. Aligning the two is on the TODO list.</p>
 
-<hr><h3>
+<hr>
+
+<h3>
 <a name="collectionremoveid" class="anchor" href="#collectionremoveid"><span class="octicon octicon-link"></span></a>Collection.remove(id)</h3>
 
 <p>Removes the specified item.</p>
@@ -580,7 +590,9 @@ Meteor's API. Aligning the two is on the TODO list.</p>
 <ul>
 <li>
 <code>id</code> <strong>string</strong> <em>required</em>: the id of the item to remove.</li>
-</ul><h5>
+</ul>
+
+<h5>
 <a name="returns-12" class="anchor" href="#returns-12"><span class="octicon octicon-link"></span></a>Returns</h5>
 
 <p>An object with two properties: <code>local</code> and <code>remote</code>. Both
@@ -595,7 +607,9 @@ of an API inconsistency which should be fixed).</p>
 item if the remote remove is successful. Otherwise it's
 rejected with the reason of the failure.</p>
 
-<hr><h3>
+<hr>
+
+<h3>
 <a name="collectionreactivequeryselector" class="anchor" href="#collectionreactivequeryselector"><span class="octicon octicon-link"></span></a>Collection.reactiveQuery(selector)</h3>
 
 <p>Gets a "reactive" subset of the collection.</p>
@@ -614,7 +628,9 @@ collection. If the function returns a truthy value, the
 item will be included, otherwise it will be left out.
 Help on adding support for more complex selectors is
 appreciated.</li>
-</ul><h5>
+</ul>
+
+<h5>
 <a name="returns-13" class="anchor" href="#returns-13"><span class="octicon octicon-link"></span></a>Returns</h5>
 
 <p>A ReactiveQuery instance.</p>
@@ -627,7 +643,9 @@ appreciated.</li>
 
 <p>The array of items in the collection that matched the query.</p>
 
-<hr><h3>
+<hr>
+
+<h3>
 <a name="reactivequeryonevent-handler" class="anchor" href="#reactivequeryonevent-handler"><span class="octicon octicon-link"></span></a>ReactiveQuery.on(event, handler)</h3>
 
 <p>Registers a handler for an event.</p>
@@ -639,7 +657,9 @@ appreciated.</li>
 <li><p><code>event</code> <strong>string</strong> <em>required</em>: the name of the event.</p></li>
 <li><p><code>handler</code> <strong>function</strong> <em>required</em>: the handler for the
 event.</p></li>
-</ul><p>Possible events are:</p>
+</ul>
+
+<p>Possible events are:</p>
 
 <ul>
 <li>
@@ -647,13 +667,15 @@ event.</p></li>
 changes. The id of the item that changed is passed to the
 handler.</li>
 </ul>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/mondora">mondora</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
+        </section>
+
+        <footer>
+          Asteroid is maintained by <a href="https://github.com/mondora">mondora</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
-    
   </body>
 </html>
